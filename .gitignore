@@ -1,1 +1,3 @@
+*.pyc
 apikey.py
+__pycache__/app4.cpython-310.pyc
