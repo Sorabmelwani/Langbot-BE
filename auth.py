@@ -9,10 +9,14 @@ salt = bcrypt.gensalt()
 collection = db['users']
 
 def signUp(email, password):
+    # If user exists, return an error
+    if collection.find_one({'email': email}):
+        return {'status': 'error', 'message': 'User already exists'}
     collection.insert_one({
         'email': email,
         'password': bcrypt.hashpw(password.encode('utf-8'), salt)
     })
+    return {'status': 'success', 'message': 'User signed up successfully'}
 
 
 def generate_token(email):

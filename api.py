@@ -75,17 +75,12 @@ def sign_up():
     password = data['password']
     
     try:
-        signUp(email, password)
+        response = signUp(email, password)
+        return response
     except Exception as e:
         # If an error occurs, return a 400 error code with an error message
         return {'error': str(e)}, 400
     
-    # Return a response
-    response = {
-        'status': 'success',
-        'message': 'User signed up successfully'
-    }
-    return response
 
 @app.route('/login', methods=['POST'])
 def logIn():
