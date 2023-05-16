@@ -1,6 +1,6 @@
 from flask import Flask,request,jsonify
 from app4 import get_response
-from auth import signUp,login,validate_token
+from auth import signUp,login,validate_token,loginUser,loginUserVerifyOtp
 from datasetFile import read_file,write_file
 from db import db
 from bson import ObjectId
@@ -160,6 +160,35 @@ def get_conversation(id):
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/login-user',methods=['POST'])
+def login_user():
+    try:
+        # Get the request data
+        data = request.json
+        email = data['email']
+        print(email)
+        
+        # Check if user exists otherwise create new and send otp
+        response = loginUser(email)
+        return response
+    except Exception as e:
+        # If an error occurs, return a 400 error code with an error message
+        return {'error': str(e)}, 400
+    
+@app.route('/verify-otp',methods=['POST'])
+def verify_otp():
+    try:
+        # Get the request data
+        data = request.json
+        email = data['email']
+        otp = data['otp']
+        
+        # Check if user exists otherwise create new and send otp
+        response = loginUserVerifyOtp(email,otp)
+        return response
+    except Exception as e:
+        # If an error occurs, return a 400 error code with an error message
+        return {'error': str(e)}, 400
 
 
 if __name__ == '__main__':

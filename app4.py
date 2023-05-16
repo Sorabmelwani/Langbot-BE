@@ -22,7 +22,7 @@ def get_response(prompt, conversation):
 
     documentsCollection = documents + product_documents
 
-    text_splitter = CharacterTextSplitter(chunk_size=512, chunk_overlap=0)
+    text_splitter = CharacterTextSplitter(chunk_size=512, chunk_overlap=20)
     documents = text_splitter.split_documents(documentsCollection)
 
 
